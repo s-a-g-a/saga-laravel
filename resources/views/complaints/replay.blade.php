@@ -359,6 +359,8 @@ border-top: 0;
   font-size: 30px; padding-right: 10px" onclick="myFunction(this)" class="fa fa-thumbs-down"></i>
   
 </div>
+@if(CRUDBooster::myPrivilegeName()=="Admin staff")
+
    <form method="post" action="{{ action('CommentsController@store') }}">
           
               @csrf
@@ -370,8 +372,9 @@ border-top: 0;
   <textarea class="form-control" name="comment" id="exampleFormControlTextarea4" rows="3"></textarea>
 </div>
 
-              <button type="submit" class="btn btn-success">submit comment</button>
+              <button type="submit" class="btn btn-success">submit Reply</button>
       </form>
+    @endif
 @if(count($posts['comments']) > 0 )
 <div style="margin-top: 20px" class="pull-left">
 @foreach($posts['comments'] as $row)

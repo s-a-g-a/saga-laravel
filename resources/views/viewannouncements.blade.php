@@ -93,12 +93,13 @@ border-top: 0;
   <div id="{{$row->id}}" class="card-header" style="font-weight:bold;font-size: 20px">
     {{$row->title}}
   </div>
+
   <div class="card-body">
       <p class="card-text" >{!!$row->description!!}</p><br>
     <div style="float: right;">
       <small>by {{$row->cms_users->name}}</small>
   @if($row->cms_users->photo == null)
-            <img src="http://localhost:8000/vendor/crudbooster/avatar.jpg" class="rounded-circle">
+            <img src="/vendor/crudbooster/avatar.jpg" width="50" height="50" class="rounded-circle">
     @else 
       @if($row->cms_users->photo[0]=="h")
       <img src="{{$row->cms_users->photo}}" class="rounded-circle" width=50 height= 50>
@@ -112,6 +113,8 @@ border-top: 0;
 
            <div align="right" class="card-footer text-muted">
         {{$row->created_at->diffForHumans()}}<br>
+
+
         <div class="pull-left">
                       @if(CRUDBooster::myId() == $row->cms_users->id)
          
@@ -135,6 +138,25 @@ border-top: 0;
         function(){  location.href="announce/delete/{{$row->id}}" });'><i class='fa fa-trash'></i>Delete</a>
           @endif
        </div>
+               <div class='pull-left' >
+          @if($row->attachements)
+          <small>This announcement has an attachement please download from the link below</small><br>
+          <a class='btn btn-xs btn-primary' title='download' href='javascript:;'
+           onclick='swal({   
+        title: "Are you sure to download a file?",   
+        text: "Attachement is going to be downloaded on confirm",   
+        type: "success",   
+        showCancelButton: true,   
+        confirmButtonColor: "#defrd",   
+        confirmButtonText: "Yes!",  
+        cancelButtonText: "No",  
+        closeOnConfirm: true }, 
+        function(){  location.href="/{{$row->attachements}}" });'><i class='fa fa-trash'></i>Download Attachement</a>
+
+          @endif
+
+        </div>
+
   </div>
 </div>
 

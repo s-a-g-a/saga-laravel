@@ -5,24 +5,61 @@
 	use DB;
 	use CRUDBooster;
 	use App\announcements;
-	//use Carbon\Carbon;
+  use App\cms_users;
+	use App\evaluation;
+  //use Carbon\Carbon;
 
 	class viewsController extends \crocodicstudio\crudbooster\controllers\CBController {
 
-
+    public function evaluate(){
+      if (CRUDBooster::myPrivilegeId()==5) {
+        $posts=evaluation::get()->all();
+      //return $posts;
+      return view('evaluate')->with('posts',$posts);
+      }
+      $sec=cms_users::find(CRUDBooster::myId());
+      $sec=intval($sec->sections);
+      $posts=evaluation::where('section','like',"%$sec%")->get();
+      //return $posts;
+      return view('evaluate')->with('posts',$posts);
+    }
 		public function getIndex(){
-			if(CRUDBooster::myId() == null) CRUDBooster::redirectBack('Sorry Hackers','warning');
+			if(CRUDBooster::myId() == null) CRUDBooster::redirectBack('Sorry Hackers','warning');  
    
-   //Create your own query 
-   $posts=announcements::orderBy('created_at','desc')->paginate(3);
+   
+
+   $sec=cms_users::find(CRUDBooster::myId());
+   
+   //return $sec;
+   //$program=explode(2, trim($sec->program));
+   $sec=intval($sec->sections);
+   //return $program;
+   $posts=announcements::where('section','like',"%$sec%")->orWhere('section',0)->orderBy('created_at','desc')->paginate(5);
+
+   if (CRUDBooster::myPrivilegeName()=="instructor") {
+     $posts=announcements::where('cms_users_id','=',CRUDBooster::myId())->orWhere('id_privileges','=',5)->orderBy('created_at','desc')->paginate(5);
+
+   }
+
    $data = [];
    $data['page_title'] = 'Products Data';
    $data['result'] = DB::table('announcements')->paginate(1);
 
-    
+    //return $posts;
    //Create a view. Please use `cbView` method instead of view method from laravel.
    return view('viewannouncements',compact('posts'));
 		}
+
+
+    function addSection(){
+      if (cms_users::find(crudbooster::myId)->sections==0) {
+        
+        return view('addsection');
+      }
+
+
+
+    }
 
 
     function postCurriculum(){

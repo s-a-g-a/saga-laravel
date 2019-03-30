@@ -4,7 +4,7 @@ use Session;
 use Request;
 use DB;
 use CRUDbooster;
-
+use App\sections;
 class AdminCmsUsersController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 
@@ -28,10 +28,32 @@ class AdminCmsUsersController extends \crocodicstudio\crudbooster\controllers\CB
 
 		# START FORM DO NOT REMOVE THIS LINE
 		$this->form = array(); 		
-		$this->form[] = array("label"=>"Name","name"=>"name",'required'=>true,'validation'=>'required|alpha_spaces|min:3');
-		$this->form[] = array("label"=>"Email","name"=>"email",'required'=>true,'type'=>'email','validation'=>'required|email|unique:cms_users,email,'.CRUDBooster::getCurrentId());		
-		$this->form[] = array("label"=>"Photo","name"=>"photo","type"=>"upload","help"=>"Recommended resolution is 200x200px",'required'=>true,'validation'=>'required|image|max:1000','resize_width'=>90,'resize_height'=>90);											
+		$this->form[] = array("label"=>"Name","name"=>"name",'required'=>true,'validation'=>'required|alpha_spaces|min:3','disabled'=>true);
+
+		$this->form[] = array("label"=>"Email","name"=>"email",'required'=>true,'type'=>'email','validation'=>'required|email|unique:cms_users,email,'.CRUDBooster::getCurrentId(),'disabled'=>true);		
+		$this->form[] = array("label"=>"Photo","name"=>"photo","type"=>"upload","help"=>"Recommended resolution is 200x200px",'required'=>true,'validation'=>'required|image|max:1000','resize_width'=>90,'resize_height'=>90,'disabled'=>true);
+		$this->form[] = array("label"=>"Gender","name"=>"gender",'required'=>true,'validation'=>'required|alpha_spaces|min:3','disabled'=>true);
+		
+		$this->form[] = array("label"=>"Privilege","name"=>"id_cms_privileges","type"=>"select","datatable"=>"cms_privileges,name",'required'=>true);	
+		$this->form[] = array("label"=>"Program","name"=>"program",'required'=>true,'validation'=>'required|alpha_spaces|min:3','disabled'=>true);		
+								
+			if (CRUDBooster::myPrivilegeName()=='instructor') {
+				$this->form[] = ['label'=>'Section','name'=>'sections','type'=>'multitext','validation'=>'required','width'=>'col-sm-9','datatable'=>'sections,Section','datatable_where'=>'cms_users_id='.CRUDBooster::myId(),'disabled'=>true];
+		}
+		elseif (CRUDBooster::myPrivilegeName()=='student') {
+			//$this->form[] = ['label'=>'Section','name'=>'sections','validation'=>'required','width'=>'col-sm-9','disabled'=>false];
+			$this->form[] = array("label"=>"Year","name"=>"year",'required'=>true,'validation'=>'required|alpha_spaces|min:3','disabled'=>true);	
 		$this->form[] = array("label"=>"Privilege","name"=>"id_cms_privileges","type"=>"select","datatable"=>"cms_privileges,name",'required'=>true);						
+		
+
+
+		$this->form[] = array("label"=>"Section","name"=>"sections",'required'=>true,'validation'=>'');											
+	
+		
+		}
+
+		
+
 		// $this->form[] = array("label"=>"Password","name"=>"password","type"=>"password","help"=>"Please leave empty if not change");
 		$this->form[] = array("label"=>"Password","name"=>"password","type"=>"password","help"=>"Please leave empty if not change");
 		$this->form[] = array("label"=>"Password Confirmation","name"=>"password_confirmation","type"=>"password","help"=>"Please leave empty if not change");

@@ -20,7 +20,7 @@ class AdminCmsUsersController extends \crocodicstudio\crudbooster\controllers\CB
 	
 		# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = array();
-		$this->col[] = array("label"=>"Name","name"=>"name");
+		$this->col[] = array("label"=>"Neba","name"=>"name");
 		$this->col[] = array("label"=>"Email","name"=>"email");
 		$this->col[] = array("label"=>"Privilege","name"=>"id_privileges","join"=>"privileges,name");
 		$this->col[] = array("label"=>"Photo","name"=>"photo","image"=>1);		
@@ -38,7 +38,7 @@ class AdminCmsUsersController extends \crocodicstudio\crudbooster\controllers\CB
 		$this->form[] = array("label"=>"Photo","name"=>"photo","type"=>"upload","help"=>"Recommended resolution is 200x200px",'required'=>true,'validation'=>'required|image|max:1000','resize_width'=>90,'resize_height'=>90);										
 
 		$this->form[] = array("label"=>"Privilege","name"=>"id_privileges","type"=>"select","datatable"=>"privileges,name",'required'=>true);						
-		$this->form[] = array("label"=>"Section","name"=>"section",'required'=>true,'validation'=>'min:3');
+		$this->form[] = array("label"=>"Section","name"=>"section",'required'=>true,'validation'=>'min:3','value'="1");
 		// $this->form[] = array("label"=>"Password","name"=>"password","type"=>"password","help"=>"Please leave empty if not change");
 		$this->form[] = array("label"=>"Password","name"=>"password","type"=>"password","help"=>"Please leave empty if not change");
 		$this->form[] = array("label"=>"Password Confirmation","name"=>"password_confirmation","type"=>"password","help"=>"Please leave empty if not change");

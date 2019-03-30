@@ -203,13 +203,8 @@ border-top: 0;
 							<br>
 							<div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
 								<h4  class="m-0"><a style="color: #2874A6" href="#">{{$row->cms_users->name}}</a></h4>
-							    <small class="text-white ml-3"> {{$row->created_at->diffForHumans()}}</small><br>
-							   
-							    <p style="color: #F2F3F4"  ; class="mb-0 text-white"><strong  style="color: #2C3E50">Subject: {{$row->title}}<br></strong>
-							    	{!!$row->content!!}</p>
-		
-		<div class="pull-right">
-							    	@if(CRUDBooster::myId() == $row->cms_users->id)
+                  <div class="pull-right">
+                    @if(CRUDBooster::myId() == $row->cms_users->id)
          
         
            <a class='btn btn-xs btn-success btn-edit' title='Edit Data'
@@ -220,31 +215,41 @@ border-top: 0;
           @if(CRUDBooster::myId() == $row->cms_users->id)
           <a class='btn btn-xs btn-warning btn-delete' title='Delete' href='javascript:;'
            onclick='swal({   
-				title: "Are you sure ?",   
-				text: "You will not be able to recover this record data!",   
-				type: "warning",   
-				showCancelButton: true,   
-				confirmButtonColor: "#ff0000",   
-				confirmButtonText: "Yes!",  
-				cancelButtonText: "No",  
-				closeOnConfirm: false }, 
-				function(){  location.href="complaints/delete/{{$row->id}}" });'><i class='fa fa-trash'></i>Delete</a>
+        title: "Are you sure ?",   
+        text: "You will not be able to recover this record data!",   
+        type: "warning",   
+        showCancelButton: true,   
+        confirmButtonColor: "#ff0000",   
+        confirmButtonText: "Yes!",  
+        cancelButtonText: "No",  
+        closeOnConfirm: false }, 
+        function(){  location.href="complaints/delete/{{$row->id}}" });'><i class='fa fa-trash'></i>Delete</a>
           @endif
 
        </div>
+							    <small class="text-white ml-3"> {{$row->created_at->diffForHumans()}}</small><br>
+							   
+							    <p style="color: #F2F3F4"  ; class="mb-0 text-white"><strong  style="color: #2C3E50">Subject: {{$row->title}}<br></strong>
+							    	{!!$row->content!!}</p>
+		
 <div align="center">
          
 							</div>
 							 <i style="
   font-size: 30px; padding-right: 10px" onclick="myFunction(this)" class="fa fa-thumbs-up"></i><i style="
   font-size: 30px; padding-right: 10px" onclick="myFunction(this)" class="fa fa-thumbs-down"></i>
-  <a class="btn btn-warning btn-circle text-uppercase"  href="viewcomplaints/comments/{{$row->id}}"><span class="glyphicon glyphicon-comment"></span>{{count($row->comments)}} comment</a>
-  <a class="btn btn-success btn-circle text-uppercase"  href="viewcomplaints/comments/{{$row->id}}" @if(count($row->replays) < 1 && CRUDBooster::myPrivilegeName()!="Admin staff") {{'disabled'}}
-  @endif ><span class="glyphicon glyphicon-bookmark" ></span>{{count($row->replays)}} replays</a>
+  <a class="btn btn-warning btn-circle text-uppercase"  href="/saga/viewcomplaints/comments/{{$row->id}}"><span class="glyphicon glyphicon-comment"></span>{{count($row->comments)}} comment</a>
+  <a class="btn btn-success btn-circle text-uppercase"  href="/saga/viewcomplaints/replys/{{$row->id}}" @if(count($row->replays) < 1 && CRUDBooster::myPrivilegeName()!="Admin staff") {{'disabled'}}
+  @endif ><span class="glyphicon glyphicon-bookmark" ></span>{{count($row->replays)}} replys</a>
+
 </div>
+
+  
 						</div>
 						<br>
-					</li></section>
+
+					</li>
+        </section>
 		<!-- LikeBtn.com BEGIN -->
 
 

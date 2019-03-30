@@ -321,7 +321,9 @@ border-top: 0;
 							<br>
 							<div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
 								<h4  class="m-0"><a style="color: #2874A6" href="#">{{$row->cms_users->name}}</a></h4>
+                
 							    <small class="text-white ml-3"> {{$row->created_at->diffForHumans()}}</small><br>
+
 							   
 							    <p style="color: #F2F3F4"  ; class="mb-0 text-white"><strong  style="color: #2C3E50">Subject: {{$row->title}}<br></strong>
 							    	{!!$row->content!!}</p>
@@ -379,7 +381,7 @@ border-top: 0;
 
             <div class="incoming_msg">
               @if($row->cms_users->photo == null)
-            <img src="http://10.240.146:8000/vendor/crudbooster/avatar.jpg" class="rounded-circle">
+            <img src="/vendor/crudbooster/avatar.jpg" width="50" height="50" class="rounded-circle">
     @else 
       @if($row->cms_users->photo[0]=="h")
       <img src="{{$row->cms_users->photo}}" class="rounded-circle" width=50 height= 50>

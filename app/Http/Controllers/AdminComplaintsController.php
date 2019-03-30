@@ -37,14 +37,16 @@
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Title','name'=>'title','type'=>'text','validation'=>'required|string|min:3|max:30','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Content','name'=>'content','type'=>'wysiwyg','validation'=>'required|string|min:3|max:1000','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Poll Type','name'=>'is_public','type'=>'select','validation'=>'required','width'=>'col-sm-9','dataenum'=>'public;anonymous'];
+			$this->form[] = ['label'=>'Title','name'=>'title','type'=>'text','validation'=>'required|string|min:3|max:50','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Content','name'=>'content','type'=>'wysiwyg','validation'=>'required|string|min:3|max:2000','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
+			//$this->form[] = ['label'=>'Poll Type','name'=>'is_public','type'=>'select','validation'=>'required','width'=>'col-sm-9','dataenum'=>'public,anonymous,public by hidding profile info'];
 			//$this->form[] = ['label'=>'Title','name'=>'title','type'=>'text','validation'=>'required|string|min:3|max:30','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Content','name'=>'content','type'=>'wysiwyg','validation'=>'required|string|min:3|max:500','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Content','name'=>'content','type'=>'wysiwyg','validation'=>'required|string|min:3|max:1000','width'=>'col-sm-10'];
 			# OLD END FORM
 
 			/* 
@@ -255,6 +257,7 @@
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
 	        $postdata['cms_users_id']=CRUDBooster::myId();
+	        $postdata['id_cms_privileges']=CRUDBooster::myPrivilegeId();
 
 	    }
 

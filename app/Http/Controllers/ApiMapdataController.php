@@ -5,11 +5,11 @@
 		use DB;
 		use CRUDBooster;
 
-		class ApiAsystController extends \crocodicstudio\crudbooster\controllers\ApiController {
+		class ApiMapdataController extends \crocodicstudio\crudbooster\controllers\ApiController {
 
 		    function __construct() {    
-				$this->table       = "cms_users";        
-				$this->permalink   = "asyst";    
+				$this->table       = "map";        
+				$this->permalink   = "mapdata";    
 				$this->method_type = "get";    
 		    }
 		

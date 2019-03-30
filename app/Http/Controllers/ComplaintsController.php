@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\complaints;
 use Illuminate\Http\Request;
-
+use CRUDBooster;
 class ComplaintsController extends Controller
 {
     /**
@@ -15,8 +15,16 @@ class ComplaintsController extends Controller
     public function index()
     
     {
-        $posts=complaints::orderBy('created_at','desc')->paginate(5);
-   
+
+        if(CRUDBooster::myId() == null) CRUDBooster::redirectBack('Sorry Hackers','warning');
+
+       if (CRUDBooster::myPrivilegeName()=="instructor") {
+            $posts=complaints::where('is_public','public')->orderBy('id_cms_privileges','asc')->orderBy('created_at','desc')->paginate(5);   
+        }
+        if (CRUDBooster::myPrivilegeName()=="Admin staff") {
+            $posts=complaints::orderBy('created_at','desc')->paginate(5);   
+        }
+        $posts=complaints::where('is_public','public')->orderBy('created_at','desc')->paginate(5);
 
     
    //Create a view. Please use `cbView` method instead of view method from laravel.

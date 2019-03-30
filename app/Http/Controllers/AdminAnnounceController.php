@@ -3,7 +3,7 @@
 	use Request;
 	use DB;
 	use CRUDBooster;
-
+	use App\Sections;
 	class AdminAnnounceController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
@@ -39,8 +39,17 @@
 			$this->form = [];
 			$this->form[] = ['label'=>'Title','name'=>'title','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Description','name'=>'description','type'=>'wysiwyg','validation'=>'required|min:1|max:7000','width'=>'col-sm-10'];
+			
+			if (CRUDBooster::myPrivilegeName()=='instructor') {
+					$this->form[] = ['label'=>'Section','name'=>'section','type'=>'checkbox','validation'=>'required','width'=>'col-sm-9','datatable'=>'sections,Section','datatable_where'=>'cms_users_id='.CRUDBooster::myId()];
+			}
+			else {
 			$this->form[] = ['label'=>'School','name'=>'school','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'All','datatable'=>'schools,name'];
 			$this->form[] = ['label'=>'Department','name'=>'department','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'All','datatable'=>'schools,name'];
+			}
+			$this->form[] = ['label'=>'Attachement','name'=>'attachements','type'=>'upload','width'=>'col-sm-9'];
+
+			
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -49,6 +58,7 @@
 			//$this->form[] = ['label'=>'Description','name'=>'description','type'=>'wysiwyg','validation'=>'required|min:1|max:7000','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'School','name'=>'school','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'All','datatable'=>'schools,name'];
 			//$this->form[] = ['label'=>'Department','name'=>'department','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'All','datatable'=>'schools,name'];
+			//$this->form[] = ['label'=>'Section','name'=>'section','type'=>'checkbox','validation'=>'required','width'=>'col-sm-9','datatable'=>'sections,Section','datatable_where'=>'where cms_users_id=4'];
 			# OLD END FORM
 
 			/* 
@@ -263,9 +273,11 @@
 	        }
 	    	  $postdata['cms_users_id']=CRUDBooster::myId();
 		       $postdata['id_privileges']=CRUDBooster::myPrivilegeId();
-		       $postdata['section']='All';
+		     if ($postdata['section']==null)
+		     	  $postdata['section']=0;
 		      $postdata['description']=str_replace('<img', '<img width=300 height=300', $postdata['description']);
 		       
+
 	    }
 
 	    /* 
@@ -275,18 +287,19 @@
 	    | @id = last insert id
 	    | 
 	    */
-	    public function hook_after_add($id) {        
+	    public function hook_after_add($id) {       
+	     
 	        //Your code here
-	       $config['content'] = "From ". CRUDBooster::myPrivilegeName();
+	    /*   $config['content'] = "From ". CRUDBooster::myPrivilegeName();
 $config['to'] = 'http://localhost:8000/saga/viewannouncements#'.$id;
 $config['id_cms_users'] = [1,2,3,4]; //The Id of the user that is going to receive notification. This could be an array of id users [1,2,3,4,5]
-CRUDBooster::sendNotification($config);
+CRUDBooster::sendNotification($config);*/
 	        redirect('/saga/viewannouncements')->send();  
 
 	    }
 
 	    /* 
-	    | ---------------------------------------------------------------------- 
+	    | -----------------------------	----------------------------------------- 
 	    | Hook for manipulate data input before update data is execute
 	    | ---------------------------------------------------------------------- 
 	    | @postdata = input post data 
